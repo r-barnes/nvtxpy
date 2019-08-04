@@ -3,8 +3,6 @@ NVTX driver implementation
 
 """
 
-from __future__ import absolute_import, print_function, division
-
 import os
 import sys
 from time import time
@@ -179,6 +177,7 @@ try:
     # specified to avoid overhead... otherwise the event_attribute version of
     # the calls will be used
     def profile_mark(message, color=None, payload=None, category=None):
+        message = message.encode("ascii")
         if all(x is None for x in (color, payload, category)):
             _lib.nvtxMarkA(message)
         else:
@@ -187,6 +186,7 @@ try:
 
 
     def profile_range_push(message, color=None, payload=None, category=None):
+        message = message.encode("ascii")
         if all(x is None for x in (color, payload, category)):
             _lib.nvtxRangePushA(message)
         else:
