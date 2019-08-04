@@ -7,10 +7,12 @@ a pythonic way.
 
 from __future__ import absolute_import, print_function, division
 
-from .nvtx import (profile_range, 
-                   profile_range_push, 
-                   profile_range_pop, 
-                   profile_mark,
-                   profiled,
-                   getstats,
-                   colors)
+from .nvtx import (
+  profile_range, 
+  profile_range_push, 
+  profile_range_pop, 
+  profile_mark,
+  profiled,
+  getstats,
+  colors
+)

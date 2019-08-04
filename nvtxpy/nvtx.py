@@ -57,15 +57,15 @@ try:
     _NVTX_VERSION = 1
 
     _NVTX_COLOR_UNKNOWN = 0
-    _NVTX_COLOR_ARGB = 1
+    _NVTX_COLOR_ARGB    = 1
 
-    _NVTX_PAYLOAD_UNKNOWN = 0
+    _NVTX_PAYLOAD_UNKNOWN             = 0
     _NVTX_PAYLOAD_TYPE_UNSIGNED_INT64 = 1
-    _NVTX_PAYLOAD_TYPE_INT64 = 2
-    _NVTX_PAYLOAD_TYPE_DOUBLE = 3
+    _NVTX_PAYLOAD_TYPE_INT64          = 2
+    _NVTX_PAYLOAD_TYPE_DOUBLE         = 3
 
-    _NVTX_MESSAGE_UNKNOWN = 0
-    _NVTX_MESSAGE_TYPE_ASCII = 1
+    _NVTX_MESSAGE_UNKNOWN      = 0
+    _NVTX_MESSAGE_TYPE_ASCII   = 1
     _NVTX_MESSAGE_TYPE_UNICODE = 2
 
     class _Payload(ctypes.Union):
@@ -208,14 +208,14 @@ except Exception as e:
 
 
 class _Colors(object):
-    red = 0xffff0000
-    green = 0xff00ff00
-    blue = 0xff0000ff
-    yellow = 0xffffff00
+    red     = 0xffff0000
+    green   = 0xff00ff00
+    blue    = 0xff0000ff
+    yellow  = 0xffffff00
     magenta = 0xffff00ff
-    cyan = 0xff00ffff
-    white = 0xffffffff
-    black = 0xff000000
+    cyan    = 0xff00ffff
+    white   = 0xffffffff
+    black   = 0xff000000
 
 
 colors = _Colors()
