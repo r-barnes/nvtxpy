@@ -22,6 +22,7 @@ def _get_cuda_nvtx_path():
             base = '/Developer/NVIDIA/CUDA-7.5/lib'
         elif sys.platform.startswith('linux'):
             base = '/usr/local/cuda-7.0/lib64'
+            base = '/usr/lib/x86_64-linux-gnu'
         else:
             # no windows default
             base = None
