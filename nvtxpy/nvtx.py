@@ -197,6 +197,7 @@ try:
     profile_range_pop = _lib.nvtxRangePop
 
 except Exception as e:
+    print("Error: ",e) #TODO
     def profile_mark(message, color=None, payload=None, category=None):
         pass
 
