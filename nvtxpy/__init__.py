@@ -14,5 +14,7 @@ from .nvtx import (
   profile_mark,
   profiled,
   getstats,
-  colors
+  colors,
+  start_profiler,
+  stop_profiler
 )

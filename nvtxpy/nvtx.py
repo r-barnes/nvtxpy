@@ -11,7 +11,7 @@ import contextlib
 import ctypes
 import numbers
 
-def _get_cuda_nvtx_path():
+def _get_cuda_nvtx_path(lib):
     base = os.environ.get('NVTXPY_CUDA_TOOLKIT')
 
     # if no environment variable is set, try a sensible default.
@@ -36,21 +36,22 @@ def _get_cuda_nvtx_path():
     else:
         ext = ''
             
-    return os.path.join(base, 'libnvToolsExt'+ext) if base is not None else None
+    return os.path.join(base, lib+ext) if base is not None else None
         
 
-def _load_lib():
+def _load_lib(lib):
     loader = ctypes.CDLL if sys.platform != 'win32' else ctypes.WinDLL
 
     try:
-        return loader(_get_cuda_nvtx_path())
+        return loader(_get_cuda_nvtx_path(lib))
     except OSError as e:
         # placeholder for more informative error... just reraise for now
         raise
 
 
 try:
-    _lib = _load_lib()
+    _lib = _load_lib('libnvToolsExt')
+    _librt = _load_lib('libcudart')
 
     # map nvtxMarkA, nvtxRangePushA and nvtxRangePop
     _NVTX_VERSION = 1
@@ -196,6 +197,12 @@ try:
 
 
     profile_range_pop = _lib.nvtxRangePop
+
+    def start_profiler():
+        _librt.cudaProfilerStart()
+
+    def stop_profiler():
+        _librt.cudaProfilerStop()
 
 except Exception as e:
     print("Error: ",e) #TODO
