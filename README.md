@@ -69,25 +69,38 @@ with nvtxpy.profile_range_nvtx_only(name, color, payload, category) as value:
 Function decorators
 -------------------
 
+Sometimes you want to mark a function or method. But there's a problem: any measurement actually within the function excludes time spent on the return or building default arguments. Function decorators come to the rescue!
 
-@nvtxpy.profiled("propagate", category=None, color=None, payload=None)
-def propagate( input_field, pixel_size_um, ref_idx, wavelength_nm, z_um,
-               tf_input_is_spectrum=False, tf_outputting_spectrum=False,
-               transfer_function=None, tf_output_transfer_function=False,
-             ):
-
-
-
-      nvtxpy.colors.red
- red, green, blue, yellow, magenta, cyan, white, black,
-
-
-profile_mark(message, color=None, payload=None, category=None):
+```python
+@nvtxpy.profiled(name, color, payload, category)
+def myfunc(arg1, arg2):
+  #code
+```
 
 
 
-    profiled ???
+Statistics
+----------
 
-    getstats()
+You can get run counts and total runtime for eaceh profiled range using:
+
+    nvtxpy.getstats()
 
 
+
+Arguments
+---------
+
+What are those arguments about?
+
+ * **name**: A string that shows up in your profiler to let you know what the range is about
+ * **color**: A hex number starting with `0xff`. Green, for instance, is `00xff00ff00`. There are several predefined colors accessible with, e.g., `nvtxpy.colors.green`. They are: `red`, `green`, `blue`, `yellow`, `magenta`, `cyan`, `white`, `black`.
+ * **payload**: TODO
+ * **category**: TODO
+
+
+
+TODO
+----
+
+    profile_mark(message, color=None, payload=None, category=None):
