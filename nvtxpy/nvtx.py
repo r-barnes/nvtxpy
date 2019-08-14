@@ -253,12 +253,12 @@ def profile_range(name, color=None, payload=None, category=None):
     profile_range_pop()
 
 
-def profiled(tag, color=None, payload=None, category=None):
+def profiled(name, color=None, payload=None, category=None):
     from functools import wraps
     def _decorator(func):
         @wraps(func)
         def _wrapper(*args, **kwargs):
-            with profile_range(tag, category=category, color=color, payload=payload):
+            with profile_range(name, category=category, color=color, payload=payload):
                 return func(*args, **kwargs)
         return _wrapper
     return _decorator
