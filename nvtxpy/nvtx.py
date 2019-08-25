@@ -12,41 +12,34 @@ import ctypes
 import numbers
 
 def _get_cuda_nvtx_path(lib):
-    base = os.environ.get('NVTXPY_CUDA_TOOLKIT')
+    libloc = os.environ.get('NVTXPY_CUDA_TOOLKIT')
+    if libloc:
+        return libloc
 
     # if no environment variable is set, try a sensible default.
     # In our case, the default install path for CUDA
     # TODO: implement something more reliable that auto updates
-    if base is None:
-        if sys.platform == 'darwin':
-            base = '/Developer/NVIDIA/CUDA-7.5/lib'
-        elif sys.platform.startswith('linux'):
-            base = '/usr/local/cuda-7.0/lib64'
-            base = '/usr/lib/x86_64-linux-gnu'
-        else:
-            # no windows default
-            base = None
-
-    if sys.platform == 'darwin':
-        ext = '.dylib'
-    elif sys.platform.startswith('linux'):
+    elif sys.platform.startswith('linux'): 
+        bases = ['/usr/local/cuda-10.1/targets/x86_64-linux/lib', '/usr/local/cuda-7.0/lib64', '/usr/lib/x86_64-linux-gnu']
         ext = '.so'
+    elif sys.platform == 'darwin':
+        bases = ['/Developer/NVIDIA/CUDA-7.5/lib']
+        ext = '.dylib'
     elif sys.platform == 'win32':
-        ext = '.dll'
+        raise Exception("Windows detected. Please set NVTXPY_CUDA_TOOLKIT environment variable!")
     else:
-        ext = ''
-            
-    return os.path.join(base, lib+ext) if base is not None else None
-        
+        raise Exception("Unrecognized platform. Please set NVTXPY_CUDA_TOOLKIT environment variable!")
+
+    for lib in [os.path.join(base, lib+ext) for base in bases]:
+        if os.path.exists(lib):
+            return lib
+
+    raise Exception("Could not locate NVTXPY library!")
+
 
 def _load_lib(lib):
     loader = ctypes.CDLL if sys.platform != 'win32' else ctypes.WinDLL
-
-    try:
-        return loader(_get_cuda_nvtx_path(lib))
-    except OSError as e:
-        # placeholder for more informative error... just reraise for now
-        raise
+    return loader(_get_cuda_nvtx_path(lib))
 
 
 try:
